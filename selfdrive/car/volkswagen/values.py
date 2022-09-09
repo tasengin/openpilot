@@ -131,10 +131,31 @@ class CAR:
   SKODA_SCALA_MK1 = "SKODA SCALA 1ST GEN"           # Chassis NW, Mk1 Skoda Scala and Skoda Kamiq
   SKODA_SUPERB_MK3 = "SKODA SUPERB 3RD GEN"         # Chassis 3V/NP, Mk3 Skoda Superb and variants
   SKODA_OCTAVIA_MK3 = "SKODA OCTAVIA 3RD GEN"       # Chassis NE, Mk3 Skoda Octavia and variants
+  JETTA_MK6 = "VOLKSWAGEN JETTA MK6-PQ35"
 
+# Mega-fingerprint used to identify any and all MQB platform vehicles. Specific
+# make and model characteristics are looked up from the VIN later.
+# Note: 1471:8 observed as 1471:4 on a 2019 Jetta, and we can't carry both in one FP, effect TBD
+FINGERPRINTS = {
 
-PQ_CARS = {CAR.PASSAT_NMS}
+  CAR.JETTA_MK6: [
+    # kamold, Edgy, austinc3030, Roy_001
+    # {80: 4, 194: 8, 208: 6, 210: 5, 294: 8, 416: 8, 428: 8, 640: 8, 648: 8, 800: 8, 835: 3, 870: 8, 872: 8, 878: 8, 896: 8, 906: 4, 912: 8, 914: 8, 919: 8, 928: 8, 978: 7, 1056: 8, 1088: 8, 1152: 8, 1>
+    # engin
+    {16: 7, 17: 7, 80: 4, 174: 8, 194: 8, 208: 6, 416: 8, 427: 8, 428: 8,
+    640: 8, 648: 8, 672: 8, 800: 8, 896: 8, 906: 4, 912: 8, 914: 8, 915: 8,
+    919: 8, 928: 8, 946: 8, 976: 6, 978: 7, 1056: 8, 1088: 8, 1096: 5,
+    1152: 8, 1160: 8, 1162: 8, 1184: 8, 1192: 8, 1306: 8, 1312: 8, 1344: 8,
+    1348: 8, 1352: 3, 1360: 8, 1386: 8, 1392: 5, 1394: 1, 1408: 8, 1416: 8,
+    1420: 8, 1423: 8, 1440: 8, 1463: 8, 1488: 8, 1490: 8, 1500: 8, 1504: 8,
+    1512: 8, 1523: 8, 1527: 4, 1824: 7, 1827: 7, 2000: 8},
+    # cd (powertrain CAN direct)
 
+    # {16: 7, 17: 7, 80: 4, 174: 8, 194: 8, 208: 6, 416: 8, 428: 8, 640: 8, 648: 8, 672: 8, 800: 8, 896: 8, 906: 4, 912: 8, 914: 8, 915: 8, 919: 8, 928: 8, 946: 8, 976: 6, 978: 7, 1056: 8, 1152: 8, 1160>
+  ],
+}
+
+PQ_CARS = {CAR.JETTA_MK6}
 
 DBC: Dict[str, Dict[str, str]] = defaultdict(lambda: dbc_dict("vw_mqb_2010", None))
 for car_type in PQ_CARS:
@@ -189,6 +210,9 @@ CAR_INFO: Dict[str, Union[VWCarInfo, List[VWCarInfo]]] = {
     VWCarInfo("Volkswagen Golf GTI 2015-21"),
     VWCarInfo("Volkswagen Golf R 2015-19", footnotes=[Footnote.VW_VARIANT]),
     VWCarInfo("Volkswagen Golf SportsVan 2015-20"),
+  ],
+  CAR.JETTA_MK6: [
+    VWCarInfo("Volkswagen Jetta 2010-2014", harness=Harness.j533),
   ],
   CAR.JETTA_MK7: [
     VWCarInfo("Volkswagen Jetta 2018-22", footnotes=[Footnote.VW_HARNESS], harness=Harness.j533),
@@ -369,6 +393,7 @@ FW_VERSIONS = {
       b'\xf1\x870D9300012  \xf1\x894937',
       b'\xf1\x870D9300012  \xf1\x895045',
       b'\xf1\x870D9300014M \xf1\x895004',
+      b'\xf1\x870D9300014Q \xf1\x895006',
       b'\xf1\x870D9300020S \xf1\x895201',
       b'\xf1\x870D9300040A \xf1\x893613',
       b'\xf1\x870D9300040S \xf1\x894311',
