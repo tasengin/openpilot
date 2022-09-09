@@ -47,7 +47,7 @@ class CarInterface(CarInterfaceBase):
       # It is documented in a four-part blog series:
       #   https://blog.willemmelching.nl/carhacking/2022/01/02/vw-part1/
       # Panda ALLOW_DEBUG firmware required.
-      ret.dashcamOnly = True
+      ret.dashcamOnly = False
 
       if disable_radar and ret.networkLocation == NetworkLocation.gateway:
         # Proof-of-concept, prep for E2E only. No radar points available. Follow-to-stop not yet supported, but should
@@ -104,6 +104,10 @@ class CarInterface(CarInterfaceBase):
     elif candidate == CAR.GOLF_MK7:
       ret.mass = 1397 + STD_CARGO_KG
       ret.wheelbase = 2.62
+
+    elif candidate == CAR.JETTA_MK6:
+      ret.mass = 1302 + STD_CARGO_KG
+      ret.wheelbase = 2.71
 
     elif candidate == CAR.JETTA_MK7:
       ret.mass = 1328 + STD_CARGO_KG
