@@ -223,13 +223,13 @@ class CarState(CarStateBase):
     if self.CP.pcmCruise:
     #  ret.accFaulted = ext_cp.vl["ACC_GRA_Anziege"]["ACA_StaACC"] in (6, 7)
     # TODO: update opendbc with PQ TSK state for OP long accFaulted
-      ret.accFaulted = ext_cp.vl["ACC_GRA_Anziege"]["ACA_StaGRA"] = 7
+      ret.accFaulted = pt_cp.vl["ACC_GRA_Anziege"]["ACA_StaGRA"] == 7
     else:
       ret.accFaulted = pt_cp.vl["Motor_2"]["GRA_Status"] == 3
 
     # Update ACC setpoint. When the setpoint reads as 255, the driver has not
     # yet established an ACC setpoint, so treat it as zero.
-    ret.cruiseState.speed = ext_cp.vl["ACC_GRA_Anziege"]["ACA_V_Wunsch"] * CV.KPH_TO_MS
+    ret.cruiseState.speed = pt_cp.vl["ACC_GRA_Anziege"]["ACA_V_Wunsch"] * CV.KPH_TO_MS
     if ret.cruiseState.speed > 70:  # 255 kph in m/s == no current setpoint
       ret.cruiseState.speed = 0
 
@@ -505,7 +505,7 @@ class MqbExtraSignals:
 class PqExtraSignals:
   # Additional signal and message lists for optional or bus-portable controllers
   fwd_radar_signals = [
-    ("ACA_StaACC", "ACC_GRA_Anziege", 0),           # ACC drivetrain coordinator status
+    ("ACA_StaGRA", "ACC_GRA_Anziege", 0),           # ACC drivetrain coordinator status
     ("ACA_V_Wunsch", "ACC_GRA_Anziege", 0),         # ACC set speed
   ]
   fwd_radar_checks = [
