@@ -227,8 +227,6 @@ class CarState(CarStateBase):
     else:
       ret.accFaulted = pt_cp.vl["Motor_2"]["GRA_Status"] == 3
 
-    self.mads_enabled = ret.cruiseState.available
-
     # Update ACC setpoint. When the setpoint reads as 255, the driver has not
     # yet established an ACC setpoint, so treat it as zero.
     ret.cruiseState.speed = ext_cp.vl["ACC_GRA_Anziege"]["ACA_V_Wunsch"] * CV.KPH_TO_MS
